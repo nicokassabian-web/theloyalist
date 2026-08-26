@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Loyalist - Special Feature</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Georgia', serif; background-color: #111; color: #fff; line-height: 1.6; }
+        
+        /* Intro screen cover */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('https://unsplash.com') no-repeat center center/cover;
+            padding: 20px;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 10px; letter-spacing: 2px; }
+        .hero p { font-size: 1.2rem; color: #ccc; max-width: 600px; }
+        .scroll-arrow { margin-top: 40px; font-size: 1.5rem; animation: bounce 2s infinite; }
+
+        /* The Scrollytelling Section Container */
+        .scrolly-container { position: relative; background: #000; }
+
+        /* This background stays locked in place while scrolling */
+        .sticky-graphic {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transition: background 0.5s ease;
+            background-color: #111;
+        }
+        .graphic-content { font-size: 2.5rem; font-weight: bold; text-transform: uppercase; color: #444; }
+
+        /* Narrative blocks that slide over the background */
+        .story-step {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh; /* Takes full window height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            pointer-events: none; /* Allows scrolling through text effortlessly */
+        }
+        .card {
+            background: rgba(20, 20, 20, 0.85);
+            border-left: 4px solid #b31010;
+            padding: 30px;
+            max-width: 500px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            pointer-events: auto; /* Brings back text selection inside card */
+        }
+        .card h2 { margin-bottom: 10px; color: #b31010; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Header -->
+    <div class="hero">
+        <h1>THE LOYALIST</h1>
+        <p>An immersive, investigative narrative experience. Scroll down to begin the journey.</p>
+        <div class="scroll-arrow">↓</div>
+    </div>
+
+    <!-- Scrollytelling Body Area -->
+    <div class="scrolly-container">
+        
+        <!-- The static window element -->
+        <div class="sticky-graphic" id="sticky-box">
+            <div class="graphic-content" id="graphic-text">CHAPTER 1</div>
+        </div>
+        
+        <!-- Scrolling Text Overlays -->
+        <div class="story-step" id="step1">
+            <div class="card">
+                <h2>The Discovery</h2>
+                <p>This is your first major point. As the reader scrolls, this card floats cleanly up over the dark background canvas, keeping them fully engaged in the pacing of the report.</p>
+            </div>
+        </div>
+
+        <div class="story-step" id="step2">
+            <div class="card">
+                <h2>The Evidence</h2>
+                <p>This is your second narrative plot point. In advanced designs, passing this section can trigger a JavaScript background image change or move a data visualization chart dynamically.</p>
+            </div>
+        </div>
+
+        <div class="story-step" id="step3">
+            <div class="card">
+                <h2>The Conclusion</h2>
+                <p>Wrap up your feature presentation right here. This clean vertical flow bypasses standard structural boundaries, allowing you to design text exactly how you want it.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Simple automated logic to demonstrate changing states during active scroll -->
+    <script>
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const graphicText = document.getElementById('graphic-text');
+        const stickyBox = document.getElementById('sticky-box');
+
+        window.addEventListener('scroll', () => {
+            const r1 = step1.getBoundingClientRect();
+            const r2 = step2.getBoundingClientRect();
+            const r3 = step3.getBoundingClientRect();
+
+            // Check which part of the document is currently inside the viewer screen
+            if (r3.top < window.innerHeight / 2) {
+                graphicText.innerText = "CONCLUSION";
+                stickyBox.style.backgroundColor = "#1a0505"; // turns slightly red
+            } else if (r2.top < window.innerHeight / 2) {
+                graphicText.innerText = "CHAPTER 2";
+                stickyBox.style.backgroundColor = "#05101a"; // turns slightly blue
+            } else {
+                graphicText.innerText = "CHAPTER 1";
+                stickyBox.style.backgroundColor = "#111"; // default dark gray
+            }
+        });
+    </script>
+</body>
+</html>
